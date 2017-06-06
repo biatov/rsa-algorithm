@@ -1,16 +1,17 @@
-def divisor(number):
-    return list(filter(None, map(lambda i: i if not number % i else '', range(2, number-1))))
+def divisor(number, mod=0):
+    if not mod:
+        return list(filter(None, map(lambda i: i if not number % i else '', range(2, number-1))))
+    else:
+        return list(filter(None, map(lambda i: i if (k * i) % number == 1 else '', range(2, number-1))))[0]
 
 
 def rsa(data):
-    n = 1739
-    k = 523
 
     p, q = divisor(n)[0], divisor(n)[1]
 
     func_phi = (p - 1) * (q - 1)
 
-    l = list(filter(None, map(lambda i: i if (k * i) % func_phi == 1 else '', range(2, 100))))[0]
+    l = divisor(func_phi, mod=1)
 
     for each in data:
         yield (each ** l) % n
@@ -25,6 +26,9 @@ def decode(data):
         else:
             print(abc[i-3], end='')
     print()
+
+n = 1739
+k = 523
 
 set_data = {
     1: [898, 1224, 426, 426, 619, 553, 682, 1228, 1209, 553, 619, 1228, 1224, 979],
