@@ -5,14 +5,10 @@ def divisor(number, mod=0):
         return list(filter(None, map(lambda i: i if (k * i) % number == 1 else '', range(2, number-1))))[0]
 
 
-def rsa(data):
-
+def get_letter_numbers(data):
     p, q = divisor(n)[0], divisor(n)[1]
-
     func_phi = (p - 1) * (q - 1)
-
     l = divisor(func_phi, mod=1)
-
     for each in data:
         yield (each ** l) % n
 
@@ -41,5 +37,5 @@ set_data = {
 
 for option in range(1, 7):
     print('Option %s' % option)
-    print('Decrypted letter numbers:', list(rsa(set_data[option])))
-    decode(list(rsa(set_data[option])))
+    print('Decrypted letter numbers:', list(get_letter_numbers(set_data[option])))
+    decode(list(get_letter_numbers(set_data[option])))
